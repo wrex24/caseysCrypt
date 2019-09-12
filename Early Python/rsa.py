@@ -1,10 +1,15 @@
 import math, sys
 
-symbols = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,.!?'
-message = 'hello world'
+symbols = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,.!?"'
+
 
 def main():
     global blockSize
+
+    file = open('message.txt')
+    rawMessage = file.read()
+    file.close()
+    message = filterText(rawMessage)
     messageFile = 'messageFile.txt'
 
     print('mode e/d')
@@ -13,6 +18,8 @@ def main():
     if mode == 'e':
         print('whats the block size?')
         blockSize = int(input())
+        if (2**1024) < (67**blockSize):
+            sys.exit("block size too large")
         pubKeyFile = 'casey_publickey.txt'
         encryptWriteFile(pubKeyFile, messageFile, message)
 
@@ -22,7 +29,14 @@ def main():
 
         print(decryptedText)
 
-def createBlocks():
+def filterText(rawMessage):
+    message = ''
+    for i in rawMessage:
+        if symbols.find(i) != -1:
+            message += i
+    return message
+
+def createBlocks(message):
     """creates blocks from message"""
     blockInteger = 0 #number represented by characters
     blocks = [] #list of blockIntegers
@@ -54,9 +68,9 @@ def createText(encryptedBlocks, messageLength, blockSize):
     return ''.join(message)
 
 
-def encrypt(e,n):
+def encrypt(e,n, message):
     encryptedBlocks = []
-    blocks = createBlocks()
+    blocks = createBlocks(message)
     for i in range(0,len(blocks)):
         encryptedBlocks.append(pow(blocks[i], e, n))
     print(encryptedBlocks)
@@ -83,7 +97,7 @@ def readFile(fileName):
 
 def encryptWriteFile(fileName, messageFile, message):
     keySize, n, e = readFile(fileName)
-    encryptedBlocks = encrypt(e,n)
+    encryptedBlocks = encrypt(e,n, message)
     for i in range(0, len(encryptedBlocks)):
         encryptedBlocks[i] = str(encryptedBlocks[i])
     encryptedMessage = ','.join(encryptedBlocks)
@@ -115,3 +129,4 @@ def readDecryptFile(messageFile, fileName):
 
 if __name__ == '__main__':
     main()
+
