@@ -1,0 +1,6 @@
+all programs are relatively self explanitory, but some run off of text files to read and write to.
+In addition you must run keyMaker to make keys before you run RSA.
+to translate text for programs reading off of files go to its respective text file and enter your message. (message.txt)
+detectEnglish, cryptoMath, pyperClip, and primeNum are all modules to run other programs
+all files can be found at https://github.com/wrex24/caseysCrypt
+I recommend running through a shell if possible.

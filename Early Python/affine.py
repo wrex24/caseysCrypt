@@ -1,4 +1,4 @@
-import cryptoMath
+import cryptoMath, sys
 
 
 
@@ -20,11 +20,16 @@ def encrypt(message, key_one, key_two):
     return new_message
 
 while True:
-    pause = input()
     file = open('message.txt', 'r+')
     message = file.read()
     file.close()
     key_one, key_two = getKey()
     new_message = encrypt(message, key_one, key_two)
     print(new_message)
+    print('press e to exit')
+    pause = input()
+    if pause == 'e':
+        sys.exit()
+
+
 

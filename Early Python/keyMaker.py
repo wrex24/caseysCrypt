@@ -8,6 +8,7 @@ def main():
     createFiles(name, keySize)
 
 
+
 def createKey(keysize):
     p = 0
     q = 0
@@ -50,3 +51,5 @@ def createFiles(name, keySize):
 
 if __name__ == '__main__':
     main()
+    print('press any key to exit')
+    pause = input()

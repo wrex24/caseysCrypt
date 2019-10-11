@@ -17,8 +17,16 @@ def main():
     
     if mode == 'e':
         print('whats the block size?')
-        blockSize = int(input())
-        if (2**1024) < (67**blockSize):
+        blockSize = 0
+        blockInput = (input())
+        if blockInput == 'max':
+            while (2**1024)> (len(symbols)**(blockSize+1)):
+                blockSize += 1
+            
+        else:
+            blockSize = int(blockInput)
+        print('Block Size = ' + str(blockSize))
+        if (2**1024) < (len(symbols)**blockSize):
             sys.exit("block size too large")
         pubKeyFile = 'casey_publickey.txt'
         encryptWriteFile(pubKeyFile, messageFile, message)
@@ -28,6 +36,7 @@ def main():
         decryptedText = readDecryptFile(messageFile, privateKeyFile)
 
         print(decryptedText)
+
 
 def filterText(rawMessage):
     message = ''
@@ -83,6 +92,9 @@ def decrypt(encryptedBlocks, n, d, blockSize, messageLength):
     for i in encryptedBlocks:
         decryptedBlocks.append(pow(i, d, n))
     text = createText(decryptedBlocks, messageLength, blockSize)
+    file = open('decryptedMessage.txt', 'w')
+    file.write(text)
+    file.close()
     return text
 
 def readFile(fileName):
@@ -129,4 +141,5 @@ def readDecryptFile(messageFile, fileName):
 
 if __name__ == '__main__':
     main()
-
+    print('press any key to exit')
+    pause = input()
